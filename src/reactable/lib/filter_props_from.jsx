@@ -31,8 +31,8 @@ const internalProps = {
 
 export function filterPropsFrom(baseProps) {
     baseProps = baseProps || {};
-    var props = {};
-    for (var key in baseProps) {
+    let props = {};
+    for (let key in baseProps) {
         if (!(key in internalProps)) {
             props[key] = baseProps[key];
         }

@@ -3,6 +3,10 @@ import { isUnsafe } from './unsafe';
 import { filterPropsFrom } from './lib/filter_props_from';
 
 export class Th extends React.Component {
+    constructor(props) {
+        super (props);
+    }
+
     render() {
         let childProps;
 
@@ -15,5 +19,5 @@ export class Th extends React.Component {
             </th>;
         }
     }
-};
+}
 

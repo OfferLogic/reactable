@@ -1,9 +1,8 @@
 export function toArray(obj) {
-    var ret = [];
-    for (var attr in obj) {
-        ret[attr] = obj;
+    let ret = [];
+    for (let prop in obj) {
+        ret[prop] = obj;
     }
-
     return ret;
 }
 

@@ -1,17 +1,28 @@
 import React from 'react';
 
-function pageHref(num) {
-    return `#page-${num + 1}`
-}
-
 export class Paginator extends React.Component {
+    constructor (props) {
+        super(props);
+
+        this.handlePrevious = this.handlePrevious.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+        //this.handlePageButton = this.handlePageButton.bind(this);
+        this.renderPrevious = this.renderPrevious.bind(this);
+        this.renderPageButton = this.renderPageButton.bind(this);
+        this.pageHref = this.pageHref.bind(this);
+    }
+
+    pageHref(num) {
+        return `#page-${num + 1}`
+    }
+
     handlePrevious(e) {
-        e.preventDefault()
+        e.preventDefault();
         this.props.onPageChange(this.props.currentPage - 1)
     }
 
     handleNext(e) {
-        e.preventDefault()
+        e.preventDefault();
         this.props.onPageChange(this.props.currentPage + 1);
     }
 
@@ -22,32 +33,37 @@ export class Paginator extends React.Component {
 
     renderPrevious() {
         if(this.props.currentPage > 0) {
-            return <a className='reactable-previous-page'
-                      href={pageHref(this.props.currentPage - 1)}
-                      onClick={this.handlePrevious.bind(this)}>
-                        {this.props.previousPageLabel || 'Previous'}
-                   </a>
+            return (
+                <a className='reactable-previous-page'
+                    href={this.pageHref(this.props.currentPage - 1)}
+                    onClick={this.handlePrevious}>
+                    {this.props.previousPageLabel || 'Previous'}
+                </a>
+            );
         }
     }
 
     renderNext() {
         if(this.props.currentPage < this.props.numPages - 1) {
-            return <a className='reactable-next-page'
-                      href={pageHref(this.props.currentPage + 1)}
-                      onClick={this.handleNext.bind(this)}>
-                      {this.props.nextPageLabel || 'Next'}
-                   </a>
+            return (
+                <a className='reactable-next-page'
+                    href={this.pageHref(this.props.currentPage + 1)}
+                    onClick={this.handleNext}>
+                    {this.props.nextPageLabel || 'Next'}
+                </a>
+            );
         }
     }
 
     renderPageButton(className, pageNum) {
-
-        return <a className={className}
-                  key={pageNum}
-                  href={pageHref(pageNum)}
-                  onClick={this.handlePageButton.bind(this, pageNum)}>
-                  {pageNum + 1}
-              </a>
+        return (
+            <a className={className}
+                key={pageNum}
+                href={this.pageHref(pageNum)}
+                onClick={this.handlePageButton.bind(this, pageNum)}>
+                {pageNum + 1}
+            </a>
+        );
     }
 
     render() {
@@ -63,17 +79,16 @@ export class Paginator extends React.Component {
             throw new TypeError('Must pass a currentPage argument to Paginator');
         }
 
-        let pageButtons = [];
-        let pageButtonLimit = this.props.pageButtonLimit;
-        let currentPage = this.props.currentPage;
-        let numPages = this.props.numPages;
-        let lowerHalf = Math.round( pageButtonLimit / 2 );
-        let upperHalf = (pageButtonLimit - lowerHalf);
+        let pageButtons = [],
+            pageButtonLimit = this.props.pageButtonLimit,
+            currentPage = this.props.currentPage,
+            numPages = this.props.numPages,
+            lowerHalf = Math.round( pageButtonLimit / 2 ),
+            upperHalf = (pageButtonLimit - lowerHalf);
 
         for (let i = 0; i < this.props.numPages; i++) {
-            let showPageButton = false;
-            let pageNum = i;
-            let className = "reactable-page-button";
+            let pageNum = i,
+                className = "reactable-page-button";
             if (currentPage === i) {
                 className += " reactable-current-page";
             }
@@ -104,5 +119,5 @@ export class Paginator extends React.Component {
             </tbody>
         );
     }
-};
+}
 

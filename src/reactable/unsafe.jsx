@@ -10,8 +10,8 @@ class Unsafe {
 
 export function unsafe(str) {
     return new Unsafe(str);
-};
+}
 
 export function isUnsafe(obj) {
     return obj instanceof Unsafe;
-};
+}

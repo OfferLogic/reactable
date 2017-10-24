@@ -4,11 +4,17 @@ import { Filterer } from './filterer';
 import { filterPropsFrom } from './lib/filter_props_from';
 
 export class Thead extends React.Component {
-    static getColumns(component) {
+    constructor (props) {
+        super(props);
+
+        this.getColumns = this.getColumns.bind(this);
+    }
+
+    getColumns (component) {
         // Can't use React.Children.map since that doesn't return a proper array
         let columns = [];
         React.Children.forEach(component.props.children, th => {
-            var column = {};
+            let column = {};
             if (!th) return;
             if (typeof th.props !== 'undefined') {
                 column.props = filterPropsFrom(th.props);
@@ -31,9 +37,7 @@ export class Thead extends React.Component {
             }
 
             if (typeof column.key === 'undefined') {
-                throw new TypeError(
-                    '<th> must have either a "column" property or a string ' +
-                    'child');
+                throw new TypeError('<th> must have either a "column" property or a string child');
             } else {
                 columns.push(column);
             }
@@ -54,12 +58,12 @@ export class Thead extends React.Component {
 
     render() {
         // Declare the list of Ths
-        var Ths = [];
-        for (var index = 0; index < this.props.columns.length; index++) {
-            var column = this.props.columns[index];
-            var thClass = `reactable-th-${column.key.replace(/\s+/g, '-').toLowerCase()}`;
-            var sortClass = '';
-            var thRole = null;
+        let Ths = [];
+        for (let index = 0; index < this.props.columns.length; index++) {
+            let column = this.props.columns[index],
+                thClass = `reactable-th-${column.key.replace(/\s+/g, '-').toLowerCase()}`,
+                sortClass = '',
+                thRole = null;
 
             if (this.props.sortableColumns[column.key]) {
                 sortClass += 'reactable-header-sortable ';
@@ -80,10 +84,7 @@ export class Thead extends React.Component {
               thClass += ` ${sortClass}`;
             }
 
-            if (
-                typeof(column.props) === 'object' &&
-                typeof(column.props.className) === 'string'
-            ) {
+            if (typeof column.props === 'object' && typeof column.props.className === 'string') {
                 thClass += ` ${column.props.className}`;
             }
 
@@ -101,7 +102,7 @@ export class Thead extends React.Component {
         }
 
         // Manually transfer props
-        var props = filterPropsFrom(this.props);
+        let props = filterPropsFrom(this.props);
 
         return (
             <thead {...props}>
@@ -117,4 +118,4 @@ export class Thead extends React.Component {
             </thead>
         );
     }
-};
+}

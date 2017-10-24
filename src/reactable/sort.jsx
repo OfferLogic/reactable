@@ -1,7 +1,7 @@
 export var Sort = {
     Numeric(a, b) {
-        var valA = parseFloat(a.toString().replace(/,/g,''));
-        var valB = parseFloat(b.toString().replace(/,/g,''));
+        let valA = parseFloat(a.toString().replace(/,/g,''));
+        let valB = parseFloat(b.toString().replace(/,/g,''));
 
         // Sort non-numeric values alphabetically at the bottom of the list
         if (isNaN(valA) && isNaN(valB)) {
@@ -46,8 +46,8 @@ export var Sort = {
         // Note: this function tries to do a standard javascript string -> date conversion
         // If you need more control over the date string format, consider using a different
         // date library and writing your own function
-        var valA = Date.parse(a);
-        var valB = Date.parse(b);
+        let valA = Date.parse(a);
+        let valB = Date.parse(b);
 
         // Handle non-date values with numeric sort
         // Sort non-numeric values alphabetically at the bottom of the list
